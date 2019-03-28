@@ -8,18 +8,36 @@
 </head>
 <body>
   <script>
-  var words1 = [1/1, 2/2, 3/3, 6/6, 7/7, 8/8, 9/9]
-  var words2 = [jia, xuexiao, shitang, caochang]
-  var words3 = ['陈泽宇','杨克琴','郭懿婷','陈欣楚','杨心怡','吴倩雯','龚佳怡','李可新','陆心怡',
-'张璐','潘梦情','田金丰','葛梦蝶','刘祎婷','沈宇峰','王达','李一鸣','徐志豪','孙睿褀','徐杨',
-'濮徐杰','陈卓豪','王昱','林超凡','孔易飞','王诚礼','杨凤旗','王韫韬','吴策','顾强','顾强','薛宇成',
-'俞浩','陈李鹏','徐超','顾伟豪','王钦鹏','孙权','潘铖','朱铭杨','张程','杨吉']
-  while () {
-    document.write(name[i] + '<br>')
-    active = active + name[i]
-    document.write(active + '<br>')
-    i++
-  }
+    window.onload = function() {
+      function makePhrases() {
+        var name = ['陈泽宇','杨克琴','郭懿婷','陈欣楚','杨心怡','吴倩雯','龚佳怡','李可新','陆心怡',
+          '张璐','潘梦情','田金丰','葛梦蝶','刘祎婷','沈宇峰','王达','李一鸣','徐志豪','孙睿褀','徐杨',
+          '濮徐杰','陈卓豪','王昱','林超凡','孔易飞','王诚礼','杨凤旗','王韫韬','吴策','顾强','顾强','薛宇成',
+          '俞浩','陈李鹏','徐超','顾伟豪','王钦鹏','孙权','潘铖','朱铭杨','张程','杨吉']
+        var time = [13.45, 12.05, 11.55, 14.25, 15.55, 16.35, 7.45, 8.15, 9.15, 10.05]
+        var site = ['在教室', '在学校','在家', '在食堂']
+        var activity = ['打游戏', '溜达', '学习', '吃饭']
+
+        //var rand1 = chooseRandStrInArray(name)
+        //var rand2 = chooseRandStrInArray(time)
+        //var rand3 = chooseRandStrInArray(site)
+        //var rand4 = chooseRandStrInArray(activity)
+
+        var phrase = chooseRandStrInArray(name) + '' + chooseRandStrInArray(time) + '' + chooseRandStrInArray(site) + '' + chooseRandStrInArray(activity)
+        document.write(phrase);
+
+        function chooseRandStrInArray(array) {
+          return array[Math.floor(Math.random() * array.length)]
+        }
+
+        // chooseRandStrInArray(time)
+      }
+      makePhrases()
+    }
+
+
+  </script>
+  </script>
   </script>
 </body>
 </html>
