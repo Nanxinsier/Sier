@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    window.onload = function() {
+      function makePhrases() {
+        var name1 = ['独倾', '独宠', '断感', 'fhy']
+        var activity = ['喜欢', 'love', '爱', '敲喜饭']
+        var name2 = ['昕昕', '猪大昕', 'qx']
+        var time = [1314, 3344]
+
+        //var rand1 = chooseRandStrInArray(name1)
+        //var rand3 = chooseRandStrInArray(activity)
+        //var rand4 = chooseRandStrInArray(name2)
+        //var rand2 = chooseRandStrInArray(time)
+
+        var phrase = chooseRandStrInArray(name1) + '' + chooseRandStrInArray(activity) + '' + chooseRandStrInArray(name2) + '' + chooseRandStrInArray(time)
+        document.write(phrase);
+
+        function chooseRandStrInArray(array) {
+          return array[Math.floor(Math.random() * array.length)]
+        }
+
+        // chooseRandStrInArray(time)
+      }
+      makePhrases()
+    }
+
+  </script>
+</body>
+</html>
