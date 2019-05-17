@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Battleship</title>
+  <embed src = "music.mp3" hidden = "true" autostart = "true" loop = "true"/>
+  <link rel = "stylesheet" type = "text/css" href = "battleship.css">
+
+</head>
+<body>
+  <div id ="board">
+    <div id = "messageArea"></div>
+    <table>
+      <tr>
+        <td id = "00" location = "A0"></td>
+        <td id = "01" location = "A1"></td>
+        <td id = "02" location = "A2"></td>
+        <td id = "03" location = "A3"></td>
+        <td id = "04" location = "A4"></td>
+        <td id = "05" location = "A5"></td>
+        <td id = "06" location = "A6"></td>
+      </tr>
+      <tr>
+        <td id = "10" location = "B0"></td>
+        <td id = "11" location = "B1"></td>
+        <td id = "12" location = "B2"></td>
+        <td id = "13" location = "B3"></td>
+        <td id = "14" location = "B4"></td>
+        <td id = "15" location = "B5"></td>
+        <td id = "16" location = "B6"></td>
+      </tr>
+      <tr>
+        <td id = "20" location = "C0"></td>
+        <td id = "21" location = "C1"></td>
+        <td id = "22" location = "C2"></td>
+        <td id = "23" location = "C3"></td>
+        <td id = "24" location = "C4"></td>
+        <td id = "25" location = "C5"></td>
+        <td id = "26" location = "C6"></td>
+        </tr>
+      <tr>
+        <td id = "30" location = "D0"></td>
+        <td id = "31" location = "D1"></td>
+        <td id = "32" location = "D2"></td>
+        <td id = "33" location = "D3"></td>
+        <td id = "34" location = "D4"></td>
+        <td id = "35" location = "D5"></td>
+        <td id = "36" location = "D6"></td> 
+      </tr>
+      <tr>
+        <td id = "40" location = "E0"></td>
+        <td id = "41" location = "E1"></td>
+        <td id = "42" location = "E2"></td>
+        <td id = "43" location = "E3"></td>
+        <td id = "44" location = "E4"></td>
+        <td id = "45" location = "E5"></td>
+        <td id = "46" location = "E6"></td> 
+      </tr>
+      <tr>
+        <td id = "50" location = "F0"></td>
+        <td id = "51" location = "F1"></td>
+        <td id = "52" location = "F2"></td>
+        <td id = "53" location = "F3"></td>
+        <td id = "54" location = "F4"></td>
+        <td id = "55" location = "F5"></td>
+        <td id = "56" location = "F6"></td>
+      </tr>
+
+      <tr>
+        <td id = "60" location = "G0"></td>
+        <td id = "61" location = "G1"></td>
+        <td id = "62" location = "G2"></td>
+        <td id = "63" location = "G3"></td>
+        <td id = "64" location = "G4"></td>
+        <td id = "65" location = "G5"></td>
+        <td id = "66" location = "G6"></td>
+      </tr>
+    </table>
+    <form>
+      <input type = "text" id = "guessInput" placeholder="A0">
+      <input type = "button" id = "fireButton" value = "Fire!">
+    </form>
+
+  </div>
+  <script src = "battleship.js"></script>
+  
+</body>
+</html>
