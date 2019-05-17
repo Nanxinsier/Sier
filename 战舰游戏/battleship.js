@@ -13,9 +13,7 @@ var view = {
   }
 };
 
-
-
-view.displayMessage("Tap tap, is this things on?");
+  //  view.displayMessage("Tap tap, is this things on?");
 
   //  model是一个对象，boardSize（游戏板网格的大小），numShips（游戏包含的战舰数），shipLength（每艘战舰占据多少个单元格）
 var model = {
@@ -23,28 +21,28 @@ var model = {
   numShips: 3,
   shipLength: 3,
   shipsSunk: 0,
-  ships: [{locations: [0, 0, 0], hits: ["", "", ""]},
+  ships: [{locations: [0, 0, 0], hits: ["", "", ""]},    //  依次获取战舰
           {locations: [0, 0, 0], hits: ["", "", ""]},
           {locations: [0, 0, 0], hits: ["", "", ""]}],
-         
   //  是否击中战舰，并返回true||false
   fire: function(guess) {
     for (var i = 0; i < this.numShips; i++) {
       var ship = this.ships[i];
-      var index = ship.locations.indexOf(guess);
+      var index = ship.locations.indexOf(guess);  //  获取guess索引
+      console.log(index)
       if (index >= 0) {
         ship.hits[index] = "hit";
         view.displayHit(guess);
-        view.displayMessage("HIT!");
+        view.displayMessage("哦吼？你真厉害！击中啦！");
         if (this.isSunk(ship)) {
-          view.displayMessage("You sank my battleship!");
+          view.displayMessage("鸭吼！你击沉了我的战舰！下面可不会那么容易呦！");
           this.shipsSunk++;
         }
         return true;
       }
     }
     view.displayMiss(guess);
-    view.displayMessage("You missed.");
+    view.displayMessage("哎呀，很遗憾，它跑掉了呢，你未击中！");
     return false;
   },
   isSunk: function(ship) {
@@ -56,7 +54,7 @@ var model = {
     return true;
   },
   //  do while循环
-  generateShipLocations: function() {
+  generateShipLocations: function() {  //  主方法，创建model对象的ships数组，（属性）numShips指定战舰
     var locations;
     for (var i = 0; i < this.numShips; i++) {
       do {
@@ -65,7 +63,7 @@ var model = {
       this.ships[i].locations = locations;
     }
   },
-  generateShip: function() {
+  generateShip: function() {  //  创建一艘战舰并指定其所在位置
     var direction = Math.floor(Math.random() * 2);
     var row, col;
     if (direction === 1) {
@@ -98,39 +96,25 @@ var model = {
   }
 };
 
-  //  generateShipLocations：这是主方法，它创建model对象中的ships数组，其中包含的战舰数由model对象的属性numShips指定。
-  //  generateShip：这个方法创建一艘战舰，并指定其在游戏板中的位置。指定的位置可能与其他战舰重叠，也可能不重叠。
-  //  collision：这个方法将一艘战舰作为参数，并判断它是否与游戏板中既有的战舰重叠。
-
-
-  //  处理玩家的猜测
-var controller = {
-  guesses: 0,
-  processGuess: function(guess) {
-  // 其他代码
-  }
-};
-
   //     自动类型转换
 function parseGuess(guess) {
   var alphabet = ["A", "B", "C", "D", "E", "F", "G"];
   if (guess === null || guess.length !== 2) {
-    alert("Oops, please enter a letter and a number on the board.");
+    alert("嘿！伙计，输入一个字母和一个数字组合才行。");
   } else {
     firstChar = guess.charAt(0);
     var row = alphabet.indexOf(firstChar);
     var column = guess.charAt(1);
     if (isNaN(row) || isNaN(column)) {
-      alert("Oops, that isn't on the board.");
-    } else if (row < 0 || row >= model.boardSize ||
-      column < 0 || column >= model.boardSize) {
-        alert("Oops, that's off the board!");
-      } else {
-        return row + column;
-      }
+      alert("笨蛋，你要打的战舰还在外太空遛弯呢！");
+    } else if (row < 0 || row >= model.boardSize || column < 0 || column >= model.boardSize) {
+      alert("Oops, that's off the board!");
+    } else {
+      return row + column;
     }
-    return null;
-  };
+  }
+  return null;
+};
 
   //  控制器的处理工作
 var controller = {
@@ -141,17 +125,24 @@ var controller = {
       this.guesses++;
       var hit = model.fire(location);
       if (hit && model.shipsSunk === model.numShips) {
-        view.displayMessage("You sank all my battleships, in " +
-        this.guesses + " guesses");
+        //  view.displayMessage("You sank all my battleships, in " + this.guesses + "guesses");
+        view.displayMessage("天啦噜！你实在是太棒啦！你击败了我所有的战舰， 经过了" + this.guesses + "次猜测，游戏结束！");
       }
     }
   }
 };
 
-  //  回车键
 function init() {
+  //  绑定页面中的fireButton元素到变量fireButton
   var fireButton = document.getElementById("fireButton");
+  //  绑定onclick事件，执行handleFireButton函数
   fireButton.onclick = handleFireButton;
+
+  var xiaoluzi = document.getElementsByTagName("td");
+  if (td[x])
+  //  绑定onclick事件，执行test函数
+  xiaoluzi.onclick = test;
+
   var guessInput = document.getElementById("guessInput");
   guessInput.onkeypress = handleKeyPress;
   model.generateShipLocations();
@@ -162,13 +153,20 @@ function handleFireButton() {
   var guessInput = document.getElementById("guessInput");
   var guess = guessInput.value;
   controller.processGuess(guess);
+  console.log(model.ships)  //  控制台输出
   guessInput.value = "";
 };
 
 function handleKeyPress(e) {
   var fireButton = document.getElementById("fireButton");
-  if (e.keyCode === 13) {
+  if (e.keyCode === 13) {  //  回车键
     fireButton.click();
     return false;
   }
 };
+
+function test(){
+  alert('天啦噜。')
+}
+
+view.displayMessage("来啦老弟？欢迎来到我的战舰游戏！");
