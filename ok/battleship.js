@@ -1,29 +1,29 @@
 var view = {
-	displayMessage: function(msg) {
+	displayMessage: function (msg) {
 		var messageArea = document.getElementById("messageArea");
 		messageArea.innerHTML = msg;
 	},
-	displayHit: function(location) {
+	displayHit: function (location) {
 		var cell = document.getElementById(location);
 		cell.setAttribute("class", "hit");
 	},
-	displayHitHead: function(location) {
+	displayHitHead: function (location) {
 		var cell = document.getElementById(location);
 		cell.setAttribute("class", "hitHead");
 	},
-	displayHitBody: function(location) {
+	displayHitBody: function (location) {
 		var cell = document.getElementById(location);
 		cell.setAttribute("class", "hitBody");
 	},
-	displayHitAfterBody: function(location) {
+	displayHitAfterBody: function (location) {
 		var cell = document.getElementById(location);
 		cell.setAttribute("class", "hitAfterBody");
 	},
-	displayMiss: function(location) {
+	displayMiss: function (location) {
 		var cell = document.getElementById(location);
 		cell.setAttribute("class", "miss");
 	},
-	displaySunk: function(location) {
+	displaySunk: function (location) {
 		var cell = document.getElementById(location);
 		cell.setAttribute("class", "sunk");
 	}
@@ -38,21 +38,24 @@ var model = {
 	numShips: 3,
 	shipLength: 3,
 	// shipsSunk: 0,
+
+	//  ships数组大集合包括三个集合三艘战舰，一艘战舰的初始化
+	//  三个属性：location（位置信息：3个格子的id），hits（三个位置一一对应），sunk（被击沉会给它赋值sunk）
 	ships: [{
-			locations: [0, 0, 0],
-			hits: ["", "", ""],
-			sunk:""
-		}, //  依次获取战舰
-		{
-			locations: [0, 0, 0],
-			hits: ["", "", ""],
-			sunk:""
-		},
-		{
-			locations: [0, 0, 0],
-			hits: ["", "", ""],
-			sunk:""
-		}
+		locations: [0, 0, 0],
+		hits: ["", "", ""],
+		sunk: ""
+	}, //  依次获取战舰
+	{
+		locations: [0, 0, 0],
+		hits: ["", "", ""],
+		sunk: ""
+	},
+	{
+		locations: [0, 0, 0],
+		hits: ["", "", ""],
+		sunk: ""
+	}
 	],
 
 
@@ -77,13 +80,13 @@ var model = {
 
 
 	//  是否击中战舰，并返回true||false
-	fire: function(guess) {
+	fire: function (guess) {
 		for (var i = 0; i < this.numShips; i++) {
 			var ship = this.ships[i];
 			var index = ship.locations.indexOf(guess); //  获取guess索引
-			if (index >= 0) {
+			if (index >= 0) { //  index位置索引
 				ship.hits[index] = "hit";
-				if(i===2){
+				if (i === 2) {
 					if (index == 0) {
 						view.displayHitHead(guess);
 					} else if (index == 1) {
@@ -91,7 +94,7 @@ var model = {
 					} else if (index == 2) {
 						view.displayHitAfterBody(guess);
 					}
-				}else{
+				} else {
 					view.displayHit(guess);
 				}
 				view.displayMessage("哦吼？你真厉害！击中啦！");
@@ -111,20 +114,20 @@ var model = {
 
 
 	//三分之二击沉更改后代码
-	isSunk: function(ship) {
+	isSunk: function (ship) {
 		var j = 0;
-		var k = 0;
+		//  var k = 0;
 		var guess = '';
-		for (var i = 0; i < (this.shipLength); i++) {
+		for (var i = 0; i < this.shipLength; i++) {
 			if (ship.hits[i] === "hit") {
 				j++;
-			} 
+			}
 			// else {
 			// 	k = i;
 			// 	guess = ship.locations[k];
 			// }
 		}
-		if (j >= (this.shipLength)*2/3) {
+		if (j >= this.shipLength * 2 / 3) {
 			// if (k == 0) {
 			// 	view.displaySunk(guess);
 			// 	// view.displayHitHead(guess);
@@ -135,13 +138,13 @@ var model = {
 			// 	view.displaySunk(guess);
 			// 	// view.displayHitAfterBody(guess);
 			// }
-			
-			for (var i = 0; i < (this.shipLength); i++) {
+
+			for (var i = 0; i < this.shipLength; i++) {
 				guess = ship.locations[i];
 				view.displaySunk(guess);
 			}
 			ship.sunk = "sunk";
-			
+
 			return true;
 		} else {
 			return false;
@@ -151,7 +154,7 @@ var model = {
 
 
 	//  do while循环
-	generateShipLocations: function() { //  主方法，创建model对象的ships数组，（属性）numShips指定战舰
+	generateShipLocations: function () { //  主方法，创建model对象的ships数组，（属性）numShips指定战舰
 		var locations;
 		for (var i = 0; i < this.numShips; i++) {
 			do {
@@ -161,17 +164,18 @@ var model = {
 		}
 	},
 
-	generateShip: function() { //  创建一艘战舰并指定其所在位置
+	//调用此方法创建战舰随机位置
+	generateShip: function () { //  创建一艘战舰并指定其所在位置
 		var direction = Math.floor(Math.random() * 2);
-		var row, col;
-		if (direction === 1) { //横向
+		var row, col;  //  方向，行，列
+		if (direction === 1) { // 横向
 			row = Math.floor(Math.random() * this.boardSize);
 			col = Math.floor(Math.random() * (this.boardSize - this.shipLength));
-		} else { //竖向
+		} else { // 竖向
 			row = Math.floor(Math.random() * (this.boardSize - this.shipLength));
 			col = Math.floor(Math.random() * this.boardSize);
 		}
-		var newShipLocations = [];
+		var newShipLocations = []; //  未知数组，用来存放战舰
 		for (var i = 0; i < this.shipLength; i++) {
 			if (direction === 1) {
 				newShipLocations.push(row + "" + (col + i));
@@ -179,10 +183,10 @@ var model = {
 				newShipLocations.push((row + i) + "" + col);
 			}
 		}
-		return newShipLocations;
+		return newShipLocations;  //  返回替换随机的id
 	},
 
-	collision: function(locations) {
+	collision: function (locations) {
 		for (var i = 0; i < this.numShips; i++) {
 			var ship = model.ships[i];
 			for (var j = 0; j < locations.length; j++) {
@@ -196,7 +200,8 @@ var model = {
 
 };
 
-//     自动类型转换
+  //     自动类型转换
+  //  parseGuess方法把传进来的A0转变为00
 function parseGuess(guess) {
 	var alphabet = ["A", "B", "C", "D", "E", "F", "G"];
 	if (guess === null || guess.length !== 2) {
@@ -220,20 +225,20 @@ function parseGuess(guess) {
 //三分之二击沉更改后代码
 var controller = {
 	guesses: 0,
-	processGuess: function(guess) {
+	processGuess: function (guess) {  //  小括号里都是形参用来传递的
 		var location = parseGuess(guess);
 		if (location) {
 			this.guesses++;
-			var hit = model.fire(location);
-			var shipsSunk = 0;
+			var hit = model.fire(location);  //  fire的一系列
+			var shipsSunk = 0;  //  bug修改
 			for (var i = 0; i < model.numShips; i++) {
-				if(model.ships[i].sunk === "sunk"){
+				if (model.ships[i].sunk === "sunk") {
 					shipsSunk++;
 				}
 			}
 			if (hit && shipsSunk === model.numShips) {
 				//  view.displayMessage("You sank all my battleships, in " + this.guesses + "guesses");
-				//         view.displayMessage("天啦噜！你实在是太棒啦！你击败了我所有的战舰， 经过了" + this.guesses + "次猜测，游戏结束！");
+				//  view.displayMessage("天啦噜！你实在是太棒啦！你击败了我所有的战舰， 经过了" + this.guesses + "次猜测，游戏结束！");
 				alert("天啦噜！你实在是太棒啦！你击败了我所有的战舰， 经过了" + this.guesses + "次猜测，游戏结束！");
 			}
 		}
@@ -247,8 +252,9 @@ function init() {
 	fireButton.onclick = handleFireButton;
 	var guessInput = document.getElementById("guessInput");
 	guessInput.onkeypress = handleKeyPress;
-	model.generateShipLocations();
+	model.generateShipLocations(); //  初始化船的位置
 }
+//  调用上面方法，程序走第一遍，初始化
 window.onload = init;
 
 function handleFireButton() {
@@ -270,14 +276,17 @@ function handleKeyPress(e) {
 view.displayMessage("来啦老弟？欢迎来到我的战舰游戏！");
 
 var tds = document.getElementsByTagName("td");
-for (var i = 0; i < tds.length; i++) {
-	tds[i].onclick = (function(x) {
-		return function() {
+for (var i = 0; i < tds.length; i++) {  //  循环加了一个onclick事件
+	tds[i].onclick = (function (x) {
+		return function () {
 			handleFireButtonByOnclick(tds[x].getAttribute("location"));
 		}
-	})(i)
+	})(i)  //  闭包问题！
 }
 
 function handleFireButtonByOnclick(place) {
 	controller.processGuess(place);
 };
+
+
+//点击一个方格触发点击事件调用方法进controller，分几步走调用fire方法判断是否击中然后判断是否击沉，整个一系列走完执行controller之后代码。。。游戏结束
