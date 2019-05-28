@@ -29,6 +29,8 @@ var model = {
   ships: [{locations: [0, 0, 0], hits: ["", "", ""], issunked: "" },
           {locations: [0, 0, 0], hits: ["", "", ""], issunked: "" },
           {locations: [0, 0, 0], hits: ["", "", ""], issunked: "" }],
+					
+					
   fire: function (guess) {
     for (var i = 0; i < this.numShips; i++) {
       var ship = this.ships[i];
@@ -38,8 +40,7 @@ var model = {
         view.displayHit(guess);
         view.displayMessage("你击中了战舰!");
         if (this.isSunk(ship)) {
-          view.displayMessage("击中了!");
-          this.shipsSunk++;
+          view.displayMessage("击沉了!");
         }
         return true;
       }
@@ -53,11 +54,16 @@ var model = {
   isSunk: function (ship) {
     var count = 0
     for (var i = 0; i < this.shipLength; i++) {
-      if (ship.hits[i] !== "hit") {
+      if (ship.hits[i] === "hit") {
         count++
       }
     }
-    if (count > this.shipLength * 0.66) {
+    if (count >= this.shipLength * 2 / 3) {
+			for (var i = 0; i < this.shipLength; i++) {
+				guess = ship.locations[i];
+				view.displayHit(guess);
+			}
+			ship.issunked = "sunk";
       return true;
     } 
       return false;
@@ -114,12 +120,18 @@ var model = {
   var controller = {
     guesses: 0,
     processGuess: function (event) {
+			controller.guesses++;
       var location = event.target.id;
       if (location) {
-        this.guesses++;
         var hit = model.fire(location);
-      if (hit && model.shipsSunk === model.numShips) {
-        alert("你击中了所有的战舰! Game over!");
+				var shipsSunk = 0;
+				for (var i = 0; i < model.numShips; i++) {
+					if (model.ships[i].issunked === "sunk") {
+						shipsSunk++;
+					}
+				}
+      if (hit && shipsSunk === model.numShips) {
+        alert("经过了" + controller.guesses + "次猜测，你击沉了所有的战舰! Game over!");
       }
     }
   }
